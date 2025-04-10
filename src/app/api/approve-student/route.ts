@@ -11,7 +11,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { userId } = await request.json()
+    const { searchParams } = new URL(request.url)
+    const userId = searchParams.get('id')
 
     if (!userId || typeof userId !== 'string') {
       return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 })
