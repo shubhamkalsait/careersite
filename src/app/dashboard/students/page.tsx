@@ -3,25 +3,49 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../../api/auth/[...nextauth]/route'
 import prisma from '@/lib/db'
 import SignOutButton from '@/components/SignOutButton'
-import StudentActions from '@/components/StudentActions'
 
-export default async function PendingStudentsPage() {
+export default async function StudentsPage() {
   const session = await getServerSession(authOptions)
 
   if (!session?.user || session.user.role !== 'admin') {
     redirect('/login')
   }
 
-  // Get all pending student registrations
-  const pendingStudents = await prisma.user.findMany({
+  // Get all students
+  const students = await prisma.user.findMany({
     where: {
       role: 'student',
-      status: 'pending',
+      status: {
+        in: ['pending', 'approved']
+      }
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
+    orderBy: [
+      { status: 'asc' }, // Show pending first
+      { createdAt: 'desc' }, // Then sort by registration date
+    ],
   })
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return 'bg-yellow-500/20 text-yellow-400'
+      case 'approved':
+        return 'bg-green-500/20 text-green-400'
+      default:
+        return 'bg-gray-500/20 text-gray-400'
+    }
+  }
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return 'Pending Review'
+      case 'approved':
+        return 'Approved'
+      default:
+        return status
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white" suppressHydrationWarning>
@@ -30,9 +54,9 @@ export default async function PendingStudentsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500">
-                Pending Registrations
+                Student Registrations
               </h1>
-              <span className="text-sm text-gray-400">Manage student registrations</span>
+              <span className="text-sm text-gray-400">View all student registrations</span>
             </div>
             <SignOutButton />
           </div>
@@ -41,7 +65,7 @@ export default async function PendingStudentsPage() {
           <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div className="px-4 py-8 sm:px-0">
               <div className="bg-gray-800/50 backdrop-blur-lg shadow-xl rounded-lg p-6 border border-gray-700">
-                {pendingStudents.length === 0 ? (
+                {students.length === 0 ? (
                   <div className="text-center py-12">
                     <svg
                       className="mx-auto h-12 w-12 text-gray-400"
@@ -56,12 +80,12 @@ export default async function PendingStudentsPage() {
                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <h3 className="mt-2 text-lg font-medium text-gray-300">No pending registrations</h3>
-                    <p className="mt-1 text-sm text-gray-400">All student registrations have been processed.</p>
+                    <h3 className="mt-2 text-lg font-medium text-gray-300">No student registrations</h3>
+                    <p className="mt-1 text-sm text-gray-400">No students have registered yet.</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {pendingStudents.map((student) => (
+                    {students.map((student) => (
                       <div
                         key={student.id}
                         className="bg-gray-700/50 p-6 rounded-lg border border-gray-600 flex items-center justify-between"
@@ -78,7 +102,11 @@ export default async function PendingStudentsPage() {
                             </p>
                           </div>
                         </div>
-                        <StudentActions userId={student.id} status={student.status} />
+                        <div className="flex items-center space-x-4">
+                          <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(student.status)}`}>
+                            {getStatusText(student.status)}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
