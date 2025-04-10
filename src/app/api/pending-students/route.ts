@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]/route'
 import prisma from '@/lib/db'
 
-export async function DELETE(req: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions)
 
@@ -14,24 +14,27 @@ export async function DELETE(req: Request) {
       )
     }
 
-    const { searchParams } = new URL(req.url)
-    const studentId = searchParams.get('id')
-
-    if (!studentId) {
-      return NextResponse.json(
-        { error: 'Student ID is required' },
-        { status: 400 }
-      )
-    }
-
-    // Delete the student
-    await prisma.user.delete({
-      where: { id: studentId },
+    // Get all pending students
+    const students = await prisma.user.findMany({
+      where: {
+        role: 'student',
+        status: 'pending'
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        status: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
     })
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json(students)
   } catch (error) {
-    console.error('Error deleting student:', error)
+    console.error('Error fetching pending students:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
