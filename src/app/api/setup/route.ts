@@ -1,31 +1,43 @@
 import { NextResponse } from 'next/server'
-import prisma from '@/lib/db'
 import bcrypt from 'bcryptjs'
+import prisma from '@/lib/db'
 
 export async function POST() {
   try {
-    const email = 'admin@example.com'
-    const password = 'admin123'
-    const name = 'Admin User'
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    const user = await prisma.user.upsert({
-      where: { email },
-      update: {},
-      create: {
-        email,
-        name,
-        password: hashedPassword,
+    // Check if admin already exists
+    const existingAdmin = await prisma.user.findFirst({
+      where: {
         role: 'admin',
       },
     })
 
-    return NextResponse.json({ message: 'Admin user created successfully', user })
+    if (existingAdmin) {
+      return NextResponse.json(
+        { message: 'Admin user already exists' },
+        { status: 400 }
+      )
+    }
+
+    // Create admin user
+    const hashedPassword = await bcrypt.hash('admin123', 10)
+    const admin = await prisma.user.create({
+      data: {
+        name: 'Admin User',
+        email: 'admin@example.com',
+        password: hashedPassword,
+        role: 'admin',
+        status: 'approved', // Admin is automatically approved
+      },
+    })
+
+    // Remove password from response
+    const { password: _, ...adminWithoutPassword } = admin
+
+    return NextResponse.json(adminWithoutPassword)
   } catch (error) {
-    console.error('Error creating admin user:', error)
+    console.error('Setup error:', error)
     return NextResponse.json(
-      { error: 'Error creating admin user' },
+      { message: 'Error creating admin user' },
       { status: 500 }
     )
   }
