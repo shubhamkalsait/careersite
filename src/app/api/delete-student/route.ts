@@ -17,14 +17,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 })
     }
 
-    const updatedUser = await prisma.user.update({
+    // Delete the student
+    await prisma.user.delete({
       where: { id: userId },
-      data: { status: 'approved' },
     })
 
-    return NextResponse.json({ success: true, user: updatedUser })
+    return NextResponse.json({ success: true, message: 'Student registration deleted' })
   } catch (error) {
-    console.error('Error approving student:', error)
-    return NextResponse.json({ error: 'Failed to approve student' }, { status: 500 })
+    console.error('Error deleting student:', error)
+    return NextResponse.json({ error: 'Failed to delete student' }, { status: 500 })
   }
 } 

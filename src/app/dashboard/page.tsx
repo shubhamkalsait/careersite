@@ -19,6 +19,13 @@ export default async function DashboardPage() {
     },
   })
 
+  // Get total students count
+  const totalStudentsCount = await prisma.user.count({
+    where: {
+      role: 'student',
+    },
+  })
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white" suppressHydrationWarning>
       <div className="py-10">
@@ -56,8 +63,17 @@ export default async function DashboardPage() {
                         )}
                       </a>
                       <a
-                        href="/dashboard/post-job"
+                        href="/dashboard/students"
                         className="block w-full bg-gradient-to-r from-green-500 to-blue-500 text-white px-4 py-3 rounded-lg hover:from-green-600 hover:to-blue-600 transition-all duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span>View All Students</span>
+                      </a>
+                      <a
+                        href="/dashboard/post-job"
+                        className="block w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-3 rounded-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-200 flex items-center justify-center space-x-2"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -74,11 +90,11 @@ export default async function DashboardPage() {
                         <span className="text-xl font-semibold">{pendingStudentsCount}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Total Jobs Posted</span>
-                        <span className="text-xl font-semibold">0</span>
+                        <span className="text-gray-400">Total Students</span>
+                        <span className="text-xl font-semibold">{totalStudentsCount}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-gray-400">Total Applications</span>
+                        <span className="text-gray-400">Total Jobs Posted</span>
                         <span className="text-xl font-semibold">0</span>
                       </div>
                     </div>
