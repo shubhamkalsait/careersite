@@ -61,7 +61,7 @@ export default function RegisterPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-            Student Registration
+            Candidate Registration
           </h2>
           <p className="mt-2 text-center text-sm text-gray-400">
             Create your account (pending admin approval)
@@ -145,7 +145,7 @@ export default function RegisterPage() {
               disabled={isSubmitting}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Registering...' : 'Register'}
+              {isSubmitting ? 'Registering...' : 'Submit'}
             </button>
           </div>
         </form>

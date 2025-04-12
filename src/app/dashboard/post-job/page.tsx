@@ -100,7 +100,7 @@ export default function PostJobPage() {
                 id="title"
                 name="title"
                 required
-                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
+                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
                 placeholder="e.g. Software Engineer"
               />
             </div>
@@ -114,7 +114,7 @@ export default function PostJobPage() {
                 id="company"
                 name="company"
                 required
-                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
+                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
                 placeholder="e.g. Tech Corp"
               />
             </div>
@@ -128,7 +128,7 @@ export default function PostJobPage() {
                 id="location"
                 name="location"
                 required
-                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
+                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
                 placeholder="e.g. San Francisco, CA"
               />
             </div>
@@ -141,7 +141,7 @@ export default function PostJobPage() {
                 id="type"
                 name="type"
                 required
-                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-500 transition-colors"
+                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-500 transition-colors"
               >
                 <option value="" className="text-gray-500">Select job type</option>
                 <option value="full-time" className="text-gray-100">Full Time</option>
@@ -159,7 +159,7 @@ export default function PostJobPage() {
                 type="text"
                 id="salary"
                 name="salary"
-                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
+                className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
                 placeholder="e.g. $50,000 - $70,000"
               />
             </div>
@@ -174,7 +174,7 @@ export default function PostJobPage() {
               name="description"
               required
               rows={6}
-              className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
+              className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
               placeholder="Describe the job responsibilities and requirements..."
             />
           </div>
@@ -188,7 +188,7 @@ export default function PostJobPage() {
               name="requirements"
               required
               rows={4}
-              className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
+              className="w-full bg-gray-900/80 border border-gray-600 rounded-lg px-4 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 hover:border-gray-500 transition-colors"
               placeholder="List the required skills and qualifications..."
             />
           </div>
